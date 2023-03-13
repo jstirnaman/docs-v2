@@ -1,10 +1,10 @@
 name: reviewdog
-on: 
-  pull_request
-  workflow_dispatch
-    inputs:
-      with:
-        files: ./content
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   vale:
@@ -17,3 +17,9 @@ jobs:
           # Required, set by GitHub actions automatically:
           # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          reporter: github-check
+          fail_on_error: true
+          level: warning
+          debug: true
+          files: "./content/**/**.md"
